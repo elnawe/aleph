@@ -8,10 +8,10 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-func init_sdl() {
+func sdl_init() {
 	runtime.LockOSThread()
 	if sdl.Init(sdl.INIT_EVERYTHING) != nil {
-		handle_error(get_sdl_error(), "failed to init SDL: %v", 100)
+		handle_error(sdl_get_error(), "failed to init SDL: %v", 100)
 	}
 	debug(fmt.Sprintf("SDL initialized. Goroutine: %d", runtime.NumGoroutine()))
 	debug(fmt.Sprintf("Allocated Memory: %v", runtime.GC))
@@ -55,8 +55,12 @@ func poll_event() (event sdl.Event) {
 	return
 }
 
-func get_sdl_error() error {
+func sdl_get_error() error {
 	return sdl.GetError()
+}
+
+func sdl_get_ticks() uint32 {
+	return sdl.GetTicks()
 }
 
 func do_delay_lock_fps(frameTime uint32) {
@@ -65,7 +69,7 @@ func do_delay_lock_fps(frameTime uint32) {
 	}
 }
 
-func quit_sdl(w *sdl.Window, r *sdl.Renderer) {
+func sdl_quit(w *sdl.Window, r *sdl.Renderer) {
 	sdl.Quit()
 	debug("exitting SDL")
 	if r != nil {

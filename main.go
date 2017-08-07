@@ -30,7 +30,7 @@ func main() {
 	init_game()
 	main_loop()
 
-	quit_sdl(game.window, game.renderer)
+	sdl_quit(game.window, game.renderer)
 }
 
 func init_game() {
@@ -52,14 +52,12 @@ func main_loop() {
 			return
 		}
 
-		frameStart = sdl.GetTicks()
+		frameStart = sdl_get_ticks()
 		game.handle_inputs()
 		game.update()
 		game.render()
-		frameTime = sdl.GetTicks() - frameStart
+		frameTime = sdl_get_ticks() - frameStart
 
 		do_delay_lock_fps(frameTime)
 	}
-
-	quit_sdl(game.window, game.renderer)
 }

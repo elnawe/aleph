@@ -17,7 +17,7 @@ type Game struct {
 
 // TODO: add texture_manager *Texture
 func (this *Game) init(title string, x, y, w, h int, fullscreen bool) {
-	init_sdl()
+	sdl_init()
 
 	this.window = create_window(title, x, y, w, h, fullscreen)
 	this.renderer = create_renderer(this.window, 0)
@@ -42,6 +42,7 @@ func (this *Game) handle_inputs() {
 
 	switch event.(type) {
 	case *sdl.QuitEvent:
+		// TODO: Add sync_mutex superset
 		sync_mutex.Lock()
 		should_quit = true
 		sync_mutex.Unlock()
