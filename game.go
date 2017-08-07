@@ -4,15 +4,15 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-// TODO: Add game_objects and input_handler
+// TODO: Add game_objects
 type Game struct {
 	currentFrame int32
 	exception    error
 	//game_objects  []Game_object
-	//input_handler Input_handler
-	renderer   *sdl.Renderer
-	game_state Game_state
-	window     *sdl.Window
+	input_handler Input_handler
+	renderer      *sdl.Renderer
+	game_state    Game_state
+	window        *sdl.Window
 }
 
 // TODO: add texture_manager *Texture
@@ -40,13 +40,17 @@ func (this *Game) update() {
 func (this *Game) handle_inputs() {
 	event := poll_event()
 
-	switch event.(type) {
+	switch event_type := event.(type) {
 	case *sdl.QuitEvent:
 		// TODO: Add sync_mutex superset
 		sync_mutex.Lock()
 		should_quit = true
 		sync_mutex.Unlock()
-	default:
-		// TODO: Input_handler
+	case *sdl.KeyDownEvent:
+		// TODO: Add input handler to handle these
+		// handle_keydown_event(event_type.Keysym.Scancode)
+	case *sdl.KeyUpEvent:
+		// TODO: Add input handler to handle these
+		// handle_keyup_event(event_type.Keysim.Scancode)
 	}
 }
