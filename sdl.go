@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"runtime"
 
@@ -13,8 +12,8 @@ func sdl_init() {
 	if sdl.Init(sdl.INIT_EVERYTHING) != nil {
 		handle_error(sdl_get_error(), "failed to init SDL: %v", 100)
 	}
-	debug(fmt.Sprintf("SDL initialized. Goroutine: %d", runtime.NumGoroutine()))
-	debug(fmt.Sprintf("Allocated Memory: %v", runtime.GC))
+	debug("SDL initialized. Goroutine: %d", runtime.NumGoroutine())
+	debug("Allocated Memory: %v", runtime.GC)
 }
 
 func create_window(title string, x, y, w, h int, fullscreen bool) *sdl.Window {
@@ -24,7 +23,7 @@ func create_window(title string, x, y, w, h int, fullscreen bool) *sdl.Window {
 	}
 	window, error := sdl.CreateWindow(title, x, y, w, h, uint32(flags))
 	handle_error(error, "failed to create window: %v", 101)
-	debug(fmt.Sprintf("Window ID: %v has been created", window.GetID()))
+	debug("Window ID: %v has been created", window.GetID())
 
 	return window
 }
@@ -49,7 +48,7 @@ func present_renderer(r *sdl.Renderer) {
 func poll_event() (event sdl.Event) {
 	event = sdl.PollEvent()
 	if is_debug_event_enabled() && event != nil {
-		debug(fmt.Sprintf("Event triggered: %v", event))
+		debug("Event triggered: %v", event)
 	}
 
 	return
@@ -73,13 +72,12 @@ func sdl_quit(w *sdl.Window, r *sdl.Renderer) {
 	sdl.Quit()
 	debug("exitting SDL")
 	if r != nil {
-		r.Destroy()
 		debug("destroying renderer instace")
+		r.Destroy()
 	}
 	if w != nil {
+		debug("destroying window ID: %d instance", w.GetID())
 		w.Destroy()
-		debug("destroying window instance")
 	}
-
 	os.Exit(0)
 }

@@ -12,9 +12,14 @@ func handle_error(e error, m string, s int) {
 	}
 }
 
-func debug(m string) {
+func debug(m string, o ...interface{}) {
 	if DEBUG_MODE {
-		fmt.Println(m)
+		format := "\t" + m + "\n"
+		if len(o) > 0 {
+			fmt.Printf(format, o)
+		} else {
+			fmt.Printf(format)
+		}
 	}
 }
 
