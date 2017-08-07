@@ -42,7 +42,9 @@ func (this *Game) handle_inputs() {
 
 	switch event.(type) {
 	case *sdl.QuitEvent:
+		sync_mutex.Lock()
 		should_quit = true
+		sync_mutex.Unlock()
 	default:
 		// TODO: Input_handler
 	}

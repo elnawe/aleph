@@ -9,6 +9,7 @@ import (
 )
 
 func init_sdl() {
+	runtime.LockOSThread()
 	if sdl.Init(sdl.INIT_EVERYTHING) != nil {
 		handle_error(get_sdl_error(), "failed to init SDL: %v", 100)
 	}
@@ -17,7 +18,7 @@ func init_sdl() {
 }
 
 func create_window(title string, x, y, w, h int, fullscreen bool) *sdl.Window {
-	flags := sdl.WINDOW_SHOWN
+	flags := sdl.WINDOW_OPENGL
 	if fullscreen {
 		flags = sdl.WINDOW_FULLSCREEN_DESKTOP
 	}
@@ -45,8 +46,13 @@ func present_renderer(r *sdl.Renderer) {
 	r.Present()
 }
 
-func poll_event() sdl.Event {
-	return sdl.PollEvent()
+func poll_event() (event sdl.Event) {
+	event = sdl.PollEvent()
+	if is_debug_event_enabled() && event != nil {
+		debug(fmt.Sprintf("Event triggered: %v", event))
+	}
+
+	return
 }
 
 func get_sdl_error() error {

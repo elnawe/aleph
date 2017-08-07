@@ -1,11 +1,14 @@
 package main
 
 import (
+	"sync"
+
 	"github.com/veandco/go-sdl2/sdl"
 )
 
 const (
 	DEBUG_MODE        bool   = true
+	DEBUG_EVENTS      bool   = false
 	DELAY_TIME        uint32 = uint32(1000.0 / FPS)
 	FPS               uint32 = 60
 	CAP_MAX_FPS       bool   = true
@@ -18,8 +21,9 @@ const (
 )
 
 var (
-	should_quit bool
 	game        Game
+	should_quit bool
+	sync_mutex  sync.Mutex
 )
 
 func main() {

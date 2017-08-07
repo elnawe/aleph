@@ -17,3 +17,7 @@ func debug(m string) {
 		fmt.Println(m)
 	}
 }
+
+func is_debug_event_enabled() bool {
+	return DEBUG_MODE && DEBUG_EVENTS
+}
