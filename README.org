@@ -1,0 +1,6 @@
+* =TODOs=
+
+** TODO Game_object
+** TODO Input_handler
+** TODO Game Console
+** TODO Menu capabilities

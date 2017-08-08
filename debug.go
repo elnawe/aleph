@@ -5,20 +5,20 @@ import (
 	"os"
 )
 
-func handle_error(e error, m string, s int) {
+func handle_error(e error, m string, p string, s int) {
 	if e != nil {
-		fmt.Fprintf(os.Stdout, "ERROR: "+m+"\n", e)
+		fmt.Fprintf(os.Stdout, "[%s] ERROR: "+m+"\n", s, e)
 		os.Exit(s)
 	}
 }
 
-func debug(m string, o ...interface{}) {
+func debug(m string, c string, o ...interface{}) {
 	if DEBUG_MODE {
-		format := "\t" + m + "\n"
+		format := "[%s]  " + m + "\n"
 		if len(o) > 0 {
-			fmt.Printf(format, o)
+			fmt.Printf(format, c, o)
 		} else {
-			fmt.Printf(format)
+			fmt.Printf(format, c)
 		}
 	}
 }

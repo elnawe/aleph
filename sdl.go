@@ -11,10 +11,10 @@ import (
 func sdl_init() {
 	runtime.LockOSThread()
 	if sdl.Init(sdl.INIT_EVERYTHING) != nil {
-		handle_error(sdl_get_error(), "failed to init SDL: %v", 100)
+		handle_error(sdl_get_error(), "failed to init SDL: %v", "SDL", 100)
 	}
-	debug("SDL initialized. Goroutine: %d", runtime.NumGoroutine())
-	debug("Allocated Memory: %v", runtime.GC)
+	debug("initialized. Goroutine: %d", "SDL", runtime.NumGoroutine())
+	debug("Allocated Memory: %v", "SDL", runtime.GC)
 }
 
 func create_window(title string, x, y, w, h int, fullscreen bool) (window *sdl.Window) {
@@ -23,16 +23,16 @@ func create_window(title string, x, y, w, h int, fullscreen bool) (window *sdl.W
 		flags = sdl.WINDOW_FULLSCREEN_DESKTOP
 	}
 	window, error := sdl.CreateWindow(title, x, y, w, h, uint32(flags))
-	handle_error(error, "failed to create window: %v", 101)
-	debug("Window ID: %v has been created", window.GetID())
+	handle_error(error, "failed to create window: %v", "SDL", 101)
+	debug("Window ID: %v has been created", "SDL", window.GetID())
 
 	return
 }
 
 func create_renderer(w *sdl.Window, i int) (renderer *sdl.Renderer) {
 	renderer, error := sdl.CreateRenderer(w, i, 0)
-	handle_error(error, "failed to create renderer: %v", 102)
-	debug("Renderer has been created")
+	handle_error(error, "failed to create renderer: %v", "SDL", 102)
+	debug("Renderer has been created", "SDL")
 	renderer.SetDrawColor(255, 255, 255, 255)
 
 	return
@@ -49,7 +49,7 @@ func present_renderer(r *sdl.Renderer) {
 func poll_event() (event sdl.Event) {
 	event = sdl.PollEvent()
 	if is_debug_event_enabled() && event != nil {
-		debug("Event triggered: %v", event)
+		debug("Event triggered: %v", "SDL", event)
 	}
 
 	return
@@ -57,7 +57,7 @@ func poll_event() (event sdl.Event) {
 
 func load_image(f string) (s *sdl.Surface) {
 	s, e := img.Load(f)
-	handle_error(e, "failed to load image: %v", 200)
+	handle_error(e, "failed to load image: %v", "SDL", 200)
 
 	return
 }
@@ -68,7 +68,7 @@ func free_surface(s *sdl.Surface) {
 
 func create_texture_from_surface(s *sdl.Surface, r *sdl.Renderer) (t *sdl.Texture) {
 	t, e := r.CreateTextureFromSurface(s)
-	handle_error(e, "failed to create texture from surface: %v", 201)
+	handle_error(e, "failed to create texture from surface: %v", "SDL", 201)
 
 	return
 }
@@ -90,13 +90,13 @@ func do_delay_lock_fps(frameTime uint32) {
 func sdl_quit(w *sdl.Window, r *sdl.Renderer) {
 	sdl.Quit()
 	runtime.UnlockOSThread()
-	debug("exitting SDL")
+	debug("exitting", "SDL")
 	if r != nil {
-		debug("destroying renderer instace")
+		debug("destroying renderer instace", "SDL")
 		r.Destroy()
 	}
 	if w != nil {
-		debug("destroying window ID: %d instance", w.GetID())
+		debug("destroying window ID: %d instance", "SDL", w.GetID())
 		w.Destroy()
 	}
 	os.Exit(0)

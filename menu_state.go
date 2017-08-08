@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 type Menu_state struct {
 	Game_manager
 	menu_id string
@@ -17,12 +13,12 @@ func (this *Menu_state) update() {}
 func (this *Menu_state) render() {}
 
 func (this *Menu_state) on_enter() bool {
-	debug(fmt.Sprintf("Entering Menu_state: %s", this.menu_id))
+	debug("Entering Menu_state: %s", "Menu_state", this.menu_id)
 	return true
 }
 
 func (this *Menu_state) on_exit() bool {
-	debug(fmt.Sprintf("Exiting Menu_state: %s", this.menu_id))
+	debug("Exiting Menu_state: %s", "Menu_state", this.menu_id)
 	return true
 }
 

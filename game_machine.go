@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type Game_manager interface {
 	update()
 	render()
@@ -22,8 +20,7 @@ func (this *Game_state) push_state(state Game_manager) {
 }
 
 func (this *Game_state) change_state(state Game_manager) {
-	// Create Debugger class
-	debug(fmt.Sprintf("Game managers: %v", this.game_managers))
+	debug("Game managers: %v", "Game_state", this.game_managers)
 
 	if len(this.game_managers) != 0 {
 		lastManagerIndex := get_last_manager_index(this.game_managers)
