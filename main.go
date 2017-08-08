@@ -54,6 +54,7 @@ func main_loop() {
 		}
 
 		frameStart = sdl_get_ticks()
+		// FIXME: Input is super-laggy
 		game.handle_inputs()
 		game.update()
 		game.render()

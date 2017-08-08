@@ -89,6 +89,7 @@ func do_delay_lock_fps(frameTime uint32) {
 
 func sdl_quit(w *sdl.Window, r *sdl.Renderer) {
 	sdl.Quit()
+	runtime.UnlockOSThread()
 	debug("exitting SDL")
 	if r != nil {
 		debug("destroying renderer instace")
