@@ -46,13 +46,8 @@ func present_renderer(r *sdl.Renderer) {
 	r.Present()
 }
 
-func poll_event() (event sdl.Event) {
-	event = sdl.PollEvent()
-	if is_debug_event_enabled() && event != nil {
-		debug("Event triggered: %v", "SDL", event)
-	}
-
-	return
+func poll_event() sdl.Event {
+	return sdl.PollEvent()
 }
 
 func load_image(f string) (s *sdl.Surface) {

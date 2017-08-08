@@ -38,21 +38,29 @@ func (this *Game) render() {
 }
 
 func (this *Game) handle_inputs() {
-	event := poll_event()
-
-	switch event_type := event.(type) {
-	case *sdl.QuitEvent:
-		// TODO: Add sync_mutex superset
-		sync_mutex.Lock()
-		should_quit = true
-		sync_mutex.Unlock()
-		// FIXME: Remove this when event_type is used
-		_ = event_type
-	case *sdl.KeyDownEvent:
-		// TODO: Add input handler to handle these
-		// handle_keydown_event(event_type.Keysym.Scancode)
-	case *sdl.KeyUpEvent:
-		// TODO: Add input handler to handle these
-		// handle_keyup_event(event_type.Keysim.Scancode)
+	for event := poll_event(); event != nil; event = poll_event() {
+		switch event_type := event.(type) {
+		case *sdl.QuitEvent:
+			// TODO: Add sync_mutex superset
+			sync_mutex.Lock()
+			should_quit = true
+			sync_mutex.Unlock()
+		case *sdl.KeyDownEvent:
+			if is_debug_event_enabled() && event != nil {
+				debug("Event key pressed:\t%v", "SDL", event_type.Keysym)
+			}
+			// TODO: Add input handler to handle these
+			// handle_keydown_event(event_type.Keysym.Scancode)
+		case *sdl.KeyUpEvent:
+			if is_debug_event_enabled() && event != nil {
+				debug("Event key released:\t%v", "SDL", event_type.Keysym)
+			}
+			// TODO: Add input handler to handle these
+			// handle_keyup_event(event_type.Keysim.Scancode)
+		case *sdl.MouseMotionEvent:
+			if is_debug_event_enabled() && event != nil {
+				debug("Event mouse motion:\t%v", "SDL", event_type.X, event_type.Y)
+			}
+		}
 	}
 }
