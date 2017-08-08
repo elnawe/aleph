@@ -4,3 +4,11 @@
 ** TODO Input_handler
 ** TODO Game Console
 ** TODO Menu capabilities
+
+** TODO fix input handler
+This should be done by adding an update() method inside Input_handler struct and then
+calling a for method to handle how sdl poll events are being evaluated.
+
+for event := poll_event(); event != nil; event = poll_event() {
+	// Pass the current switch method inside here.
+}
