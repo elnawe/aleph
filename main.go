@@ -21,7 +21,7 @@ const (
 )
 
 var (
-	game            Game
+	the_game        Game
 	should_quit     bool
 	sync_mutex      sync.Mutex
 	texture_manager Texture_manager
@@ -31,11 +31,11 @@ func main() {
 	init_game()
 	main_loop()
 
-	sdl_quit(game.window, game.renderer)
+	sdl_quit(the_game.window, the_game.renderer)
 }
 
 func init_game() {
-	game.init(
+	the_game.init(
 		WINDOW_TITLE,
 		WINDOW_POSITION_X,
 		WINDOW_POSITION_Y,
@@ -54,9 +54,9 @@ func main_loop() {
 		}
 
 		frameStart = sdl_get_ticks()
-		game.handle_inputs()
-		game.update()
-		game.render()
+		the_game.handle_inputs()
+		the_game.update()
+		the_game.render()
 		frameTime = sdl_get_ticks() - frameStart
 
 		do_delay_lock_fps(frameTime)

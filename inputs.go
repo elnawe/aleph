@@ -1,3 +1,3 @@
 package main
 
-type Input_handler struct{}
+type Input_Handler struct{}

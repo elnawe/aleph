@@ -5,13 +5,14 @@ import (
 )
 
 // TODO: Add game_objects
+// TODO: Make error to handle game errors
 type Game struct {
 	currentFrame int32
-	exception    error
+	errors       []error
 	//game_objects  []Game_object
-	input_handler Input_handler
+	input_handler Input_Handler
 	renderer      *sdl.Renderer
-	game_state    Game_state
+	game_state    Game_State
 	window        *sdl.Window
 }
 
