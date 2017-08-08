@@ -30,6 +30,7 @@ func create_window(title string, x, y, w, h int, fullscreen bool) (window *sdl.W
 }
 
 func create_renderer(w *sdl.Window, i int) (renderer *sdl.Renderer) {
+	// TODO: Read about flags in CreateRenderer
 	renderer, error := sdl.CreateRenderer(w, i, 0)
 	handle_error(error, "failed to create renderer: %v", "SDL", 102)
 	debug("Renderer has been created", "SDL")

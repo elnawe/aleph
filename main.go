@@ -21,10 +21,9 @@ const (
 )
 
 var (
-	the_game        Game
-	should_quit     bool
-	sync_mutex      sync.Mutex
-	texture_manager Texture_manager
+	should_quit bool
+	sync_mutex  sync.Mutex
+	the_game    Game
 )
 
 func main() {
@@ -52,7 +51,6 @@ func main_loop() {
 		if should_quit {
 			return
 		}
-
 		frameStart = sdl_get_ticks()
 		the_game.handle_inputs()
 		the_game.update()

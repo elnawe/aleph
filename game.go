@@ -21,7 +21,6 @@ func (this *Game) init(title string, x, y, width, height int, fullscreen bool) {
 
 	this.window = create_window(title, x, y, width, height, fullscreen)
 	this.renderer = create_renderer(this.window, 0)
-	texture_manager.renderer = this.renderer
 
 	this.game_state.change_state(init_menu_state())
 }
