@@ -15,14 +15,18 @@ type Game struct {
 	window        *sdl.Window
 }
 
-// TODO: add texture_manager *Texture
-func (this *Game) init(title string, x, y, w, h int, fullscreen bool) {
+func (this *Game) init(title string, x, y, width, height int, fullscreen bool) {
 	sdl_init()
 
-	this.window = create_window(title, x, y, w, h, fullscreen)
+	this.window = create_window(title, x, y, width, height, fullscreen)
 	this.renderer = create_renderer(this.window, 0)
+	texture_manager.renderer = this.renderer
 
 	this.game_state.change_state(init_menu_state())
+}
+
+func (this *Game) update() {
+	this.game_state.update()
 }
 
 func (this *Game) render() {
@@ -31,10 +35,6 @@ func (this *Game) render() {
 	// TODO: Add logic to render (draw)
 
 	present_renderer(this.renderer)
-}
-
-func (this *Game) update() {
-	this.game_state.update()
 }
 
 func (this *Game) handle_inputs() {
@@ -46,6 +46,8 @@ func (this *Game) handle_inputs() {
 		sync_mutex.Lock()
 		should_quit = true
 		sync_mutex.Unlock()
+		// FIXME: Remove this when event_type is used
+		_ = event_type
 	case *sdl.KeyDownEvent:
 		// TODO: Add input handler to handle these
 		// handle_keydown_event(event_type.Keysym.Scancode)

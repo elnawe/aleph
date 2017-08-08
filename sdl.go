@@ -4,6 +4,7 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -16,7 +17,7 @@ func sdl_init() {
 	debug("Allocated Memory: %v", runtime.GC)
 }
 
-func create_window(title string, x, y, w, h int, fullscreen bool) *sdl.Window {
+func create_window(title string, x, y, w, h int, fullscreen bool) (window *sdl.Window) {
 	flags := sdl.WINDOW_OPENGL
 	if fullscreen {
 		flags = sdl.WINDOW_FULLSCREEN_DESKTOP
@@ -25,16 +26,16 @@ func create_window(title string, x, y, w, h int, fullscreen bool) *sdl.Window {
 	handle_error(error, "failed to create window: %v", 101)
 	debug("Window ID: %v has been created", window.GetID())
 
-	return window
+	return
 }
 
-func create_renderer(w *sdl.Window, i int) *sdl.Renderer {
+func create_renderer(w *sdl.Window, i int) (renderer *sdl.Renderer) {
 	renderer, error := sdl.CreateRenderer(w, i, 0)
 	handle_error(error, "failed to create renderer: %v", 102)
 	debug("Renderer has been created")
 	renderer.SetDrawColor(255, 255, 255, 255)
 
-	return renderer
+	return
 }
 
 func clear_renderer(r *sdl.Renderer) {
@@ -50,6 +51,24 @@ func poll_event() (event sdl.Event) {
 	if is_debug_event_enabled() && event != nil {
 		debug("Event triggered: %v", event)
 	}
+
+	return
+}
+
+func load_image(f string) (s *sdl.Surface) {
+	s, e := img.Load(f)
+	handle_error(e, "failed to load image: %v", 200)
+
+	return
+}
+
+func free_surface(s *sdl.Surface) {
+	s.Free()
+}
+
+func create_texture_from_surface(s *sdl.Surface, r *sdl.Renderer) (t *sdl.Texture) {
+	t, e := r.CreateTextureFromSurface(s)
+	handle_error(e, "failed to create texture from surface: %v", 201)
 
 	return
 }

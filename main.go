@@ -21,9 +21,10 @@ const (
 )
 
 var (
-	game        Game
-	should_quit bool
-	sync_mutex  sync.Mutex
+	game            Game
+	should_quit     bool
+	sync_mutex      sync.Mutex
+	texture_manager Texture_manager
 )
 
 func main() {
