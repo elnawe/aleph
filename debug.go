@@ -14,7 +14,11 @@ func handle_error(e error, m string, p string, s int) {
 
 func debug(m string, c string, o ...interface{}) {
 	if DEBUG_MODE {
-		format := "[%s]  " + m + "\n"
+		tabs := "\t\t"
+		if len(c) > 4 {
+			tabs = "\t"
+		}
+		format := "[%s]" + tabs + m + "\n"
 		if len(o) > 0 {
 			fmt.Printf(format, c, o)
 		} else {

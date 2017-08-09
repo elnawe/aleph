@@ -29,7 +29,6 @@ var (
 func main() {
 	init_game()
 	main_loop()
-
 	sdl_quit(the_game.window, the_game.renderer)
 }
 

@@ -14,7 +14,6 @@ func sdl_init() {
 		handle_error(sdl_get_error(), "failed to init SDL: %v", "SDL", 100)
 	}
 	debug("initialized. Goroutine: %d", "SDL", runtime.NumGoroutine())
-	debug("Allocated Memory: %v", "SDL", runtime.GC)
 }
 
 func create_window(title string, x, y, w, h int, fullscreen bool) (window *sdl.Window) {
@@ -84,9 +83,7 @@ func do_delay_lock_fps(frameTime uint32) {
 }
 
 func sdl_quit(w *sdl.Window, r *sdl.Renderer) {
-	sdl.Quit()
 	runtime.UnlockOSThread()
-	debug("exitting", "SDL")
 	if r != nil {
 		debug("destroying renderer instace", "SDL")
 		r.Destroy()
@@ -95,5 +92,8 @@ func sdl_quit(w *sdl.Window, r *sdl.Renderer) {
 		debug("destroying window ID: %d instance", "SDL", w.GetID())
 		w.Destroy()
 	}
+	sdl.Quit()
+	debug("exitting", "SDL")
+	debug("finished. Goroutine: %d", "SDL", runtime.NumGoroutine())
 	os.Exit(0)
 }
