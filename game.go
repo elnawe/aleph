@@ -4,12 +4,11 @@ import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
-// TODO: Add game_objects
 // TODO: Make error to handle game errors
 type Game struct {
 	currentFrame  int32
 	errors        []error
-	game_objects  []Game_Object
+	game_objects  []Game_Object_State
 	input_handler Input_Handler
 	renderer      *sdl.Renderer
 	game_state    Game_State

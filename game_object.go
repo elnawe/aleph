@@ -2,30 +2,30 @@ package main
 
 import "github.com/veandco/go-sdl2/sdl"
 
-type Object_State interface {
-	render()
+// NOTE: This is a super early version of Game_Object.
+// Game_Object should have everything to make it work.
+
+type Game_Object_State interface {
+	render() // render(g *Game, texture_manager *Texture_Manager). Make it to pass game and texture_manager
 	update()
 }
 
 type Game_Object struct {
-	Object_State
-
-	id            int
-	name          string
-	on_update     func(*Game_Object)
-	position_rect sdl.Rect
-	source_rect   sdl.Rect
-	texture       *sdl.Texture
+	id           int32
+	name         string
+	acceleration Vector2
+	position     Vector2
+	velocity     Vector2
 }
 
 func (this *Game_Object) render(r *sdl.Renderer) {
+	// Refactor with texture manager
 	r.Copy(this.texture, &this.source_rect, &this.position_rect)
 }
 
 func (this *Game_Object) update() {
-	if this.on_update != nil {
-		this.on_update(this)
-	}
+	this.velocity.add(this.acceleration)
+	this.position.add(this.velocity)
 }
 
 func (this *Game_Object) find_game_object(name string) Game_Object {
