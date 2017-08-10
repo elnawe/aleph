@@ -6,21 +6,24 @@ import "github.com/veandco/go-sdl2/sdl"
 // Game_Object should have everything to make it work.
 
 type Game_Object_State interface {
-	render() // render(g *Game, texture_manager *Texture_Manager). Make it to pass game and texture_manager
+	render(*Game, *Texture_Manager)
 	update()
 }
 
 type Game_Object struct {
-	id           int32
-	name         string
-	acceleration Vector2
-	position     Vector2
-	velocity     Vector2
+	acceleration  Vector2
+	current_frame int32
+	current_row   int32
+	unique_id     int32
+	name          string
+	position      Vector2
+	scale         Vector2
+	texture_id    string
+	velocity      Vector2
 }
 
-func (this *Game_Object) render(r *sdl.Renderer) {
-	// Refactor with texture manager
-	r.Copy(this.texture, &this.source_rect, &this.position_rect)
+func (this *Game_Object) render(game *Game, texture_manager *Texture_Manager) {
+	texture_manager.draw(*this, game, sdl.FLIP_NONE)
 }
 
 func (this *Game_Object) update() {
@@ -28,27 +31,11 @@ func (this *Game_Object) update() {
 	this.position.add(this.velocity)
 }
 
-func (this *Game_Object) find_game_object(name string) Game_Object {
-	var found_game_object Game_Object
-
-	for _, game_object := range the_game.game_objects {
-		if game_object.name == name {
-			found_game_object = game_object
-		}
+func instantiate(name, texture_id string, width, height, x, y float64) *Game_Object {
+	return &Game_Object{
+		name:       name,
+		position:   Vector2{x, y},
+		scale:      Vector2{width, height},
+		texture_id: texture_id,
 	}
-
-	return found_game_object
-}
-
-// TODO: Find a better way, probably?
-func new_game_object(name string, texture *sdl.Texture, source_rect sdl.Rect) {
-	game_object := Game_Object{
-		name:        name,
-		source_rect: source_rect,
-		texture:     texture,
-	}
-
-	debug("Creating new Game Object, %v", "Game_Object", game_object)
-
-	the_game.game_objects = append(the_game.game_objects, game_object)
 }

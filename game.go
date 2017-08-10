@@ -15,7 +15,7 @@ type Game struct {
 	window        *sdl.Window
 }
 
-func (this *Game) init(title string, x, y, width, height int, fullscreen bool) {
+func (this *Game) init(title string, x, y, width, height int, fullscreen bool, texture_manager *Texture_Manager) {
 	sdl_init()
 
 	this.window = create_window(title, x, y, width, height, fullscreen)
@@ -24,11 +24,11 @@ func (this *Game) init(title string, x, y, width, height int, fullscreen bool) {
 	this.game_state.change_state(init_menu_state())
 }
 
-func (this *Game) render() {
+func (this *Game) render(texture_manager *Texture_Manager) {
 	clear_renderer(this.renderer)
 
 	for i, _ := range this.game_objects {
-		this.game_objects[i].render(this.renderer)
+		this.game_objects[i].render(this, texture_manager)
 	}
 
 	present_renderer(this.renderer)

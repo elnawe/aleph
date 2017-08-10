@@ -20,10 +20,12 @@ const (
 	WINDOW_FULLSCREEN bool   = false
 )
 
+// TODO: This globals could be a problem. Redo this if needed.
 var (
-	should_quit bool
-	sync_mutex  sync.Mutex
-	the_game    Game
+	should_quit     bool
+	sync_mutex      sync.Mutex
+	texture_manager Texture_Manager
+	the_game        Game
 )
 
 func main() {
@@ -33,6 +35,10 @@ func main() {
 }
 
 func init_game() {
+	texture_manager = Texture_Manager{
+		texture_map: map[string]*sdl.Texture{},
+	}
+
 	the_game.init(
 		WINDOW_TITLE,
 		WINDOW_POSITION_X,
@@ -40,6 +46,7 @@ func init_game() {
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
 		WINDOW_FULLSCREEN,
+		&texture_manager,
 	)
 }
 
@@ -53,7 +60,7 @@ func main_loop() {
 		frameStart = sdl_get_ticks()
 		the_game.handle_inputs()
 		the_game.update()
-		the_game.render()
+		the_game.render(&texture_manager)
 		frameTime = sdl_get_ticks() - frameStart
 
 		do_delay_lock_fps(frameTime)

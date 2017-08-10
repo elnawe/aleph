@@ -5,14 +5,6 @@ type Vector2 struct {
 	y float64
 }
 
-func (this *Vector2) x() {
-	return this.x
-}
-
-func (this *Vector2) y() {
-	return this.y
-}
-
 func (this *Vector2) set(x, y float64) {
 	this.x = x
 	this.y = y
