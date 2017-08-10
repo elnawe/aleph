@@ -7,9 +7,9 @@ import (
 // TODO: Add game_objects
 // TODO: Make error to handle game errors
 type Game struct {
-	currentFrame int32
-	errors       []error
-	//game_objects  []Game_object
+	currentFrame  int32
+	errors        []error
+	game_objects  []Game_Object
 	input_handler Input_Handler
 	renderer      *sdl.Renderer
 	game_state    Game_State
@@ -25,16 +25,22 @@ func (this *Game) init(title string, x, y, width, height int, fullscreen bool) {
 	this.game_state.change_state(init_menu_state())
 }
 
-func (this *Game) update() {
-	this.game_state.update()
-}
-
 func (this *Game) render() {
 	clear_renderer(this.renderer)
 
-	// TODO: Add logic to render (draw)
+	for i, _ := range this.game_objects {
+		this.game_objects[i].render(this.renderer)
+	}
 
 	present_renderer(this.renderer)
+}
+
+func (this *Game) update() {
+	for i, _ := range this.game_objects {
+		this.game_objects[i].update()
+	}
+
+	this.game_state.update()
 }
 
 func (this *Game) handle_inputs() {
