@@ -58,7 +58,7 @@ func main_loop() {
 			return
 		}
 		frameStart = sdl_get_ticks()
-		the_game.handle_inputs()
+		the_game.input()
 		the_game.update()
 		the_game.render(&texture_manager)
 		frameTime = sdl_get_ticks() - frameStart

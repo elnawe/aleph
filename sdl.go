@@ -50,6 +50,10 @@ func poll_event() sdl.Event {
 	return sdl.PollEvent()
 }
 
+func get_keyboard_state() []uint8 {
+	return sdl.GetKeyboardState()
+}
+
 func load_image(f string) (s *sdl.Surface) {
 	s, e := img.Load(f)
 	handle_error(e, "failed to load image: %v", "SDL", 200)

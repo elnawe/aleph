@@ -31,11 +31,6 @@ func (this *Vector2) add_y(y float64) {
 	this.y += y
 }
 
-func (this *Vector2) multiply(xy Vector2) {
-	this.x *= xy.x
-	this.y *= xy.y
-}
-
 func (this *Vector2) subtract(xy Vector2) {
 	this.x -= xy.x
 	this.y -= xy.y
@@ -49,9 +44,14 @@ func (this *Vector2) subtract_y(y float64) {
 	this.y -= y
 }
 
-func (this *Vector2) divide(xy Vector2) {
-	this.x /= xy.x
-	this.y /= xy.y
+func (this *Vector2) multiply(scalar float64) {
+	this.x *= scalar
+	this.y *= scalar
+}
+
+func (this *Vector2) divide(scalar float64) {
+	this.x /= scalar
+	this.y /= scalar
 }
 
 func (this *Vector2) reset() {

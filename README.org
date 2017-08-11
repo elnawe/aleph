@@ -6,3 +6,4 @@
 ** TODO A better way to handle textures/texture rendering
 ** TODO Stop passing the game struct (the_game) as global
 ** TODO Animation
+** TODO Particles

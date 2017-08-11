@@ -80,5 +80,7 @@ func (this *Player) update() {
 		this.is_moving = false
 	}
 
-	this.velocity.reset()
+	if !this.is_moving {
+		this.velocity.reset()
+	}
 }

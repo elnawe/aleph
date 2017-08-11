@@ -15,9 +15,6 @@ type Game struct {
 	window        *sdl.Window
 }
 
-// TODO: Move this to Input_Handler
-var key_pressed []uint8
-
 func (this *Game) init(title string, x, y, width, height int, fullscreen bool, texture_manager *Texture_Manager) {
 	sdl_init()
 
@@ -45,34 +42,6 @@ func (this *Game) update() {
 	this.game_state.update()
 }
 
-func (this *Game) handle_inputs() {
-	for event := poll_event(); event != nil; event = poll_event() {
-		switch event_type := event.(type) {
-		case *sdl.QuitEvent:
-			// TODO: Add sync_mutex superset
-			sync_mutex.Lock()
-			should_quit = true
-			sync_mutex.Unlock()
-		case *sdl.KeyDownEvent:
-			if is_debug_event_enabled() && event != nil {
-				debug("Event key pressed:\t%v", "SDL", event_type.Keysym)
-			}
-
-			key_pressed = sdl.GetKeyboardState()
-			// TODO: Add input handler to handle these
-			// handle_keydown_event(event_type.Keysym.Scancode)
-		case *sdl.KeyUpEvent:
-			if is_debug_event_enabled() && event != nil {
-				debug("Event key released:\t%v", "SDL", event_type.Keysym)
-			}
-
-			key_pressed = nil
-			// TODO: Add input handler to handle these
-			// handle_keyup_event(event_type.Keysim.Scancode)
-		case *sdl.MouseMotionEvent:
-			if is_debug_event_enabled() && event != nil {
-				debug("Event mouse motion:\t%v", "SDL", event_type.X, event_type.Y)
-			}
-		}
-	}
+func (this *Game) input() {
+	this.input_handler.update()
 }
