@@ -52,10 +52,10 @@ func (this *Player) update() {
 		if this.current_frame < this.frames-1 {
 			this.current_frame++
 		} else {
-			this.reset_frame_count()
+			this.current_frame = 1
 		}
 	} else {
-		this.reset_frame_count()
+		this.current_frame = 0
 	}
 
 	if this.is_grounded {
@@ -81,8 +81,4 @@ func (this *Player) update() {
 	}
 
 	this.velocity.reset()
-}
-
-func (this *Game_Object) reset_frame_count() {
-	this.current_frame = 0
 }
