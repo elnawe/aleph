@@ -28,14 +28,9 @@ var (
 	the_game        Game
 )
 
-func main() {
-	init_game()
-	main_loop()
-	sdl_quit(the_game.window, the_game.renderer)
-}
-
-func init_game() {
+func init() {
 	texture_manager = Texture_Manager{
+		game:        &the_game,
 		texture_map: map[string]*sdl.Texture{},
 	}
 
@@ -48,6 +43,11 @@ func init_game() {
 		WINDOW_FULLSCREEN,
 		&texture_manager,
 	)
+}
+
+func main() {
+	main_loop()
+	sdl_quit(the_game.window, the_game.renderer)
 }
 
 func main_loop() {

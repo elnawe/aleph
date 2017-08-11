@@ -33,7 +33,7 @@ func create_renderer(w *sdl.Window, i int) (renderer *sdl.Renderer) {
 	renderer, error := sdl.CreateRenderer(w, i, 0)
 	handle_error(error, "failed to create renderer: %v", "SDL", 102)
 	debug("Renderer has been created", "SDL")
-	renderer.SetDrawColor(255, 255, 255, 255)
+	renderer.SetDrawColor(0, 175, 135, 255)
 
 	return
 }

@@ -5,20 +5,21 @@ import (
 )
 
 type Texture_Manager struct {
+	error       error
+	game        *Game
 	texture_map map[string]*sdl.Texture
 	zero_point  *sdl.Point
-	error       error
 }
 
-func (this *Texture_Manager) load(file_name, id string, game *Game) {
+func (this *Texture_Manager) load(file_name, id string) {
 	temp_surface := load_image(file_name)
 
-	this.texture_map[id] = create_texture_from_surface(temp_surface, game.renderer)
+	this.texture_map[id] = create_texture_from_surface(temp_surface, this.game.renderer)
 
 	defer temp_surface.Free()
 }
 
-func (this *Texture_Manager) draw(game_object Game_Object, game *Game, flip sdl.RendererFlip) {
+func (this *Texture_Manager) draw(game_object Game_Object, flip sdl.RendererFlip) {
 	var source_rect, destination_rect sdl.Rect
 
 	source_rect.X, source_rect.Y = 0, 0
@@ -26,7 +27,7 @@ func (this *Texture_Manager) draw(game_object Game_Object, game *Game, flip sdl.
 	source_rect.H, destination_rect.H = int32(game_object.scale.y), int32(game_object.scale.y)
 	destination_rect.X, destination_rect.Y = int32(game_object.position.x), int32(game_object.position.y)
 
-	game.renderer.CopyEx(
+	this.game.renderer.CopyEx(
 		this.texture_map[game_object.texture_id],
 		&source_rect,
 		&destination_rect,
@@ -36,7 +37,7 @@ func (this *Texture_Manager) draw(game_object Game_Object, game *Game, flip sdl.
 	)
 }
 
-func (this *Texture_Manager) draw_frame(game_object Game_Object, game *Game, flip sdl.RendererFlip) {
+func (this *Texture_Manager) draw_frame(game_object Game_Object, flip sdl.RendererFlip) {
 	var source_rect, destination_rect sdl.Rect
 
 	source_rect.X = int32(game_object.scale.x) * game_object.current_frame
@@ -45,7 +46,7 @@ func (this *Texture_Manager) draw_frame(game_object Game_Object, game *Game, fli
 	source_rect.W, source_rect.H = int32(game_object.scale.x), int32(game_object.scale.y)
 	destination_rect.W, destination_rect.H = int32(game_object.scale.x), int32(game_object.scale.y)
 
-	game.renderer.CopyEx(
+	this.game.renderer.CopyEx(
 		this.texture_map[game_object.texture_id],
 		&source_rect,
 		&destination_rect,

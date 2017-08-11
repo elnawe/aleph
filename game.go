@@ -15,6 +15,9 @@ type Game struct {
 	window        *sdl.Window
 }
 
+// TODO: Move this to Input_Handler
+var key_pressed []uint8
+
 func (this *Game) init(title string, x, y, width, height int, fullscreen bool, texture_manager *Texture_Manager) {
 	sdl_init()
 
@@ -28,7 +31,7 @@ func (this *Game) render(texture_manager *Texture_Manager) {
 	clear_renderer(this.renderer)
 
 	for i, _ := range this.game_objects {
-		this.game_objects[i].render(this, texture_manager)
+		this.game_objects[i].render(texture_manager)
 	}
 
 	present_renderer(this.renderer)
@@ -54,12 +57,16 @@ func (this *Game) handle_inputs() {
 			if is_debug_event_enabled() && event != nil {
 				debug("Event key pressed:\t%v", "SDL", event_type.Keysym)
 			}
+
+			key_pressed = sdl.GetKeyboardState()
 			// TODO: Add input handler to handle these
 			// handle_keydown_event(event_type.Keysym.Scancode)
 		case *sdl.KeyUpEvent:
 			if is_debug_event_enabled() && event != nil {
 				debug("Event key released:\t%v", "SDL", event_type.Keysym)
 			}
+
+			key_pressed = nil
 			// TODO: Add input handler to handle these
 			// handle_keyup_event(event_type.Keysim.Scancode)
 		case *sdl.MouseMotionEvent:

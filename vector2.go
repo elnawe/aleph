@@ -10,9 +10,25 @@ func (this *Vector2) set(x, y float64) {
 	this.y = y
 }
 
+func (this *Vector2) set_x(x float64) {
+	this.x = x
+}
+
+func (this *Vector2) set_y(y float64) {
+	this.y = y
+}
+
 func (this *Vector2) add(xy Vector2) {
 	this.x += xy.x
 	this.y += xy.y
+}
+
+func (this *Vector2) add_x(x float64) {
+	this.x += x
+}
+
+func (this *Vector2) add_y(y float64) {
+	this.y += y
 }
 
 func (this *Vector2) multiply(xy Vector2) {
@@ -23,6 +39,14 @@ func (this *Vector2) multiply(xy Vector2) {
 func (this *Vector2) subtract(xy Vector2) {
 	this.x -= xy.x
 	this.y -= xy.y
+}
+
+func (this *Vector2) subtract_x(x float64) {
+	this.x -= x
+}
+
+func (this *Vector2) subtract_y(y float64) {
+	this.y -= y
 }
 
 func (this *Vector2) divide(xy Vector2) {

@@ -1,8 +1,8 @@
 * =TODOs=
 
-** TODO Game_object
 ** TODO Input_handler
 ** TODO Game Console
 ** TODO Menu capabilities
 ** TODO A better way to handle textures/texture rendering
 ** TODO Stop passing the game struct (the_game) as global
+** TODO Animation
