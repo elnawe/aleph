@@ -15,33 +15,33 @@ type Game struct {
 	window        *sdl.Window
 }
 
-func (this *Game) init(title string, x, y, width, height int, fullscreen bool, texture_manager *Texture_Manager) {
+func (g *Game) init(title string, x, y, width, height int, fullscreen bool, texture_manager *Texture_Manager) {
 	sdl_init()
 
-	this.window = create_window(title, x, y, width, height, fullscreen)
-	this.renderer = create_renderer(this.window, 0)
+	g.window = create_window(title, x, y, width, height, fullscreen)
+	g.renderer = create_renderer(g.window, 0)
 
-	this.game_state.change_state(init_menu_state())
+	g.game_state.change_state(init_menu_state())
 }
 
-func (this *Game) render(texture_manager *Texture_Manager) {
-	clear_renderer(this.renderer)
+func (g *Game) render(texture_manager *Texture_Manager) {
+	clear_renderer(g.renderer)
 
-	for i, _ := range this.game_objects {
-		this.game_objects[i].render(texture_manager)
+	for i, _ := range g.game_objects {
+		g.game_objects[i].render(texture_manager)
 	}
 
-	present_renderer(this.renderer)
+	present_renderer(g.renderer)
 }
 
-func (this *Game) update() {
-	for i, _ := range this.game_objects {
-		this.game_objects[i].update()
+func (g *Game) update() {
+	for i, _ := range g.game_objects {
+		g.game_objects[i].update()
 	}
 
-	this.game_state.update()
+	g.game_state.update()
 }
 
-func (this *Game) input() {
-	this.input_handler.update()
+func (g *Game) input() {
+	g.input_handler.update()
 }

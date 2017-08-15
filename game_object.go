@@ -2,7 +2,7 @@ package main
 
 import "github.com/veandco/go-sdl2/sdl"
 
-// NOTE: This is a super early version of Game_Object.
+// NOTE: Gobj is a super early version of Game_Object.
 // Game_Object should have everything to make it work.
 
 type Game_Object_State interface {
@@ -23,11 +23,11 @@ type Game_Object struct {
 	velocity      Vector2
 }
 
-func (this *Game_Object) render(texture_manager *Texture_Manager) {
-	texture_manager.draw(*this, sdl.FLIP_NONE)
+func (gobj *Game_Object) render(texture_manager *Texture_Manager) {
+	texture_manager.draw(*gobj, sdl.FLIP_NONE)
 }
 
-func (this *Game_Object) update() {
-	this.velocity.add(this.acceleration)
-	this.position.add(this.velocity)
+func (gobj *Game_Object) update() {
+	gobj.velocity.add(gobj.acceleration)
+	gobj.position.add(gobj.velocity)
 }

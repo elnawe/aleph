@@ -24,63 +24,63 @@ func init() {
 	})
 }
 
-func (this *Player) render(texture_manager *Texture_Manager) {
-	if this.face == 1 {
-		texture_manager.draw_frame(this.Game_Object, sdl.FLIP_HORIZONTAL)
+func (p *Player) render(texture_manager *Texture_Manager) {
+	if p.face == 1 {
+		texture_manager.draw_frame(p.Game_Object, sdl.FLIP_HORIZONTAL)
 	} else {
-		texture_manager.draw_frame(this.Game_Object, sdl.FLIP_NONE)
+		texture_manager.draw_frame(p.Game_Object, sdl.FLIP_NONE)
 	}
 }
 
-func (this *Player) update() {
+func (p *Player) update() {
 	if is_key_down(sdl.SCANCODE_D) {
-		this.velocity.set_x(7)
-		this.face = 0
-		this.is_moving = true
-		this.Game_Object.update()
+		p.velocity.set_x(7)
+		p.face = 0
+		p.is_moving = true
+		p.Game_Object.update()
 	}
 
 	if is_key_down(sdl.SCANCODE_A) {
-		this.velocity.set_x(-7)
-		this.face = 1
-		this.is_moving = true
-		this.Game_Object.update()
+		p.velocity.set_x(-7)
+		p.face = 1
+		p.is_moving = true
+		p.Game_Object.update()
 	}
 
 	// TODO: Animation
-	if this.is_moving {
-		if this.current_frame < this.frames-1 {
-			this.current_frame++
+	if p.is_moving {
+		if p.current_frame < p.frames-1 {
+			p.current_frame++
 		} else {
-			this.current_frame = 1
+			p.current_frame = 1
 		}
 	} else {
-		this.current_frame = 0
+		p.current_frame = 0
 	}
 
-	if this.is_grounded {
+	if p.is_grounded {
 		if is_key_down(sdl.SCANCODE_W) {
-			this.acceleration.set_y(-150)
-			this.is_grounded = false
-			this.Game_Object.update()
+			p.acceleration.set_y(-150)
+			p.is_grounded = false
+			p.Game_Object.update()
 		}
 	} else {
-		this.acceleration.set_y(0)
+		p.acceleration.set_y(0)
 
-		if this.position.y < 600-96 {
-			this.acceleration.set_y(5)
+		if p.position.y < 600-96 {
+			p.acceleration.set_y(5)
 		} else {
-			this.is_grounded = true
+			p.is_grounded = true
 		}
 
-		this.Game_Object.update()
+		p.Game_Object.update()
 	}
 
 	if key_pressed == nil {
-		this.is_moving = false
+		p.is_moving = false
 	}
 
-	if !this.is_moving {
-		this.velocity.reset()
+	if !p.is_moving {
+		p.velocity.reset()
 	}
 }

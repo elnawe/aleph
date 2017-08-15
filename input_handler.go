@@ -18,7 +18,7 @@ func is_key_down(key sdl.Scancode) bool {
 	return false
 }
 
-func (this *Input_Handler) update() {
+func (ih *Input_Handler) update() {
 	var event sdl.Event
 	for event = poll_event; event != nil; event = poll_event() {
 		switch event_type := event.(type) {
@@ -28,12 +28,12 @@ func (this *Input_Handler) update() {
 			should_quit = true
 			sync_mutex.Unlock()
 		case *sdl.KeyDownEvent:
-			this.on_key_pressed()
+			ih.on_key_pressed()
 			if is_debug_event_enabled() && event != nil {
 				debug("Event key pressed:\t%v", "SDL", event_type.Keysym)
 			}
 		case *sdl.KeyUpEvent:
-			this.on_key_released()
+			ih.on_key_released()
 			if is_debug_event_enabled() && event != nil {
 				debug("Event key released:\t%v", "SDL", event_type.Keysym)
 			}
@@ -45,10 +45,10 @@ func (this *Input_Handler) update() {
 	}
 }
 
-func (this *Input_Handler) on_key_pressed() {
+func (ih *Input_Handler) on_key_pressed() {
 	key_pressed = get_keyboard_state()
 }
 
-func (this *Input_Handler) on_key_released() {
+func (ih *Input_Handler) on_key_released() {
 	key_pressed = nil
 }
